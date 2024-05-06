@@ -20,7 +20,6 @@ public class PublishMessage {
 //            );
     public static ScenarioBuilder scn = scenario("Publish New Message").group("Publish New Message").on(
             exec(new Login().login())
-        .exec(new MainPage().open())
         .exec(new SendMessage().send())
         .exec(new Logout().logout()));
 

@@ -17,7 +17,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class SendMessage {
 
-
     public Function<Session, Session> pp(){
         System.out.println("asssssss");
         return null;

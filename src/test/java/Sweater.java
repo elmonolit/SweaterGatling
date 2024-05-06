@@ -1,3 +1,5 @@
+import Sweater.scenario.LikeMessage;
+import Sweater.scenario.Pagination;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.gatling.javaapi.core.*;
@@ -16,9 +18,9 @@ public class Sweater extends Simulation {
         System.out.println((double) conf.getInt("PublishMessageIntensivity")/3600);
     }
 
-    private HttpProtocolBuilder httpProtocol = http.proxy(Proxy("localhost", 8888))
-    .baseUrl("http://192.168.188.245:8089")
-//    .inferHtmlResources(AllowList(".*192.168.188.245.*"), DenyList(".*\\.js", ".*\\.css", ".*\\.gif", ".*\\.jpeg", ".*\\.jpg", ".*\\.ico", ".*\\.woff", ".*\\.woff2", ".*\\.(t|o)tf", ".*\\.png", ".*\\.svg", ".*detectportal\\.firefox\\.com.*"))
+    private HttpProtocolBuilder httpProtocol = http
+//            .proxy(Proxy("localhost", 8888))
+    .baseUrl(conf.getString("baseUrl"))
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")
     .acceptEncodingHeader("gzip, deflate")
     .acceptLanguageHeader("ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3")
@@ -28,6 +30,11 @@ public class Sweater extends Simulation {
 //  {
 //	  setUp(
 //              PublishMessage.scn.injectOpen(
+//                      atOnceUsers(1)),
+//              Pagination.scn.injectOpen(
+//                      atOnceUsers(1)
+//              ),
+//              LikeMessage.scn.injectOpen(
 //                      atOnceUsers(1)
 //              )
 //      ).protocols(httpProtocol);
@@ -35,10 +42,34 @@ public class Sweater extends Simulation {
 
   {
 	  setUp(
-              PublishMessage.scn.injectOpen(
-                      rampUsersPerSec(0).to((double) conf.getInt("PublishMessageIntensivity")/3600).during(60),
-                      constantUsersPerSec((double) conf.getInt("PublishMessageIntensivity")/3600).during(300)
+            PublishMessage.scn.injectOpen(
+                      rampUsersPerSec(0).to((double) conf.getInt("PublishMessageIntensivity")/3600)
+                              .during(30),
+                      constantUsersPerSec((double) conf.getInt("PublishMessageIntensivity")/3600).during(300),
+                      rampUsersPerSec(0).to((double) conf.getInt("PublishMessageIntensivity")/3600 * 2)
+                            .during(30),
+                      constantUsersPerSec((double) conf.getInt("PublishMessageIntensivity")/3600 * 2).during(300)
+              ),
+            Pagination.scn.injectOpen(
+                      rampUsersPerSec(0).to((double) conf.getInt("PaginationIntensivity")/3600)
+                              .during(30),
+                      constantUsersPerSec((double) conf.getInt("PaginationIntensivity")/3600).during(300),
+                    rampUsersPerSec(0).to((double) conf.getInt("PaginationIntensivity")/3600 * 2)
+                            .during(30),
+                    constantUsersPerSec((double) conf.getInt("PaginationIntensivity")/3600 * 2).during(300)
+              ),
+            LikeMessage.scn.injectOpen(
+                      rampUsersPerSec(0).to((double) conf.getInt("LikeIntensivity")/3600)
+                              .during(30),
+                      constantUsersPerSec((double) conf.getInt("LikeIntensivity")/3600).during(300),
+                    rampUsersPerSec(0).to((double) conf.getInt("LikeIntensivity")/3600 * 2)
+                            .during(30),
+                    constantUsersPerSec((double) conf.getInt("LikeIntensivity")/3600 * 2).during(300)
               )
-      ).protocols(httpProtocol);
+            ).protocols(httpProtocol).assertions(
+                    details("Publish New Message").responseTime().percentile3().lt(2000),
+                    details("Like Message", "Pagination").responseTime().max().lt(3000)
+      );
+
   }
 }
