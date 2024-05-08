@@ -12,7 +12,7 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 
 public class PublishMessage {
 
-//    public static ScenarioBuilder scn = scenario("Publish New Message").repeat(10).on(
+    //    public static ScenarioBuilder scn = scenario("Publish New Message").repeat(10).on(
 //            exec(new Login().login(),
 //                    new MainPage().open(),
 //                    new SendMessage().send(),
@@ -20,7 +20,7 @@ public class PublishMessage {
 //            );
     public static ScenarioBuilder scn = scenario("Publish New Message").group("Publish New Message").on(
             exec(new Login().login())
-        .exec(new SendMessage().send())
-        .exec(new Logout().logout()));
+                    .exec(new SendMessage().send())
+                    .exec(new Logout().logout()));
 
 }

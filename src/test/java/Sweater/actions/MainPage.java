@@ -10,16 +10,20 @@ import static io.gatling.javaapi.core.CoreDsl.regex;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
 public class MainPage {
-    public ChainBuilder open(){
+    public ChainBuilder open() {
         return exec(
                 http("[GET]_/main")
                         .get("/main")
-                        .check(regex("data-id=\\\"(\\d+)\\\"")
-                        .findRandom().saveAs("message"))
+                        .check(
+                                regex("data-id=\\\"(\\d+)\\\"").findRandom().saveAs("message")
+                        )
+                        .check(
+                                regex("href=\\\"\\/user-messages\\/(\\d+)\\\"").findRandom().saveAs("user")
+                        )
         );
     }
 
-    public ChainBuilder openRandomPage(){
+    public ChainBuilder openRandomPage() {
         int page = new Random().nextInt(10) + 1;
 //        System.out.println(page);
         int size = 5;

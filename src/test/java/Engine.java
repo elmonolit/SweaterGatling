@@ -8,8 +8,8 @@ public class Engine {
                 .resourcesDirectory(IDEPathHelper.mavenResourcesDirectory.toString())
                 .resultsDirectory(IDEPathHelper.resultsDirectory.toString())
                 .binariesDirectory(IDEPathHelper.mavenBinariesDirectory.toString());
-        String simClass = Sweater.class.getName();
-        props.simulationClass(simClass);
+//        String simClass = Sweater.class.getName();
+//        props.simulationClass(simClass);
         Gatling.fromMap(props.build());
     }
 }
