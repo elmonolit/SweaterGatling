@@ -4,7 +4,6 @@ import Sweater.actions.Login;
 import Sweater.actions.MainPage;
 import Sweater.actions.Subscribe;
 import Sweater.actions.UserPage;
-import com.redis.S;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
 import static io.gatling.javaapi.core.CoreDsl.exec;

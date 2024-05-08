@@ -13,13 +13,13 @@ public class SimulationRoot extends Simulation {
     @Override
     public void before() {
 
-        System.out.println((double) conf.getInt("PublishMessageIntensivity")/3600);
+        System.out.println((double) conf.getInt("PublishMessageIntensivity") / 3600);
         System.out.println(conf.getString("baseUrl"));
     }
 
     protected HttpProtocolBuilder httpProtocol = http
 //            .proxy(Proxy("localhost", 8888))
-    .baseUrl(conf.getString("baseUrl"))
+            .baseUrl(conf.getString("baseUrl"))
             .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")
             .acceptEncodingHeader("gzip, deflate")
             .acceptLanguageHeader("ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3")

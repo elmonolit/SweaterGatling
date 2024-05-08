@@ -11,21 +11,21 @@ import javax.annotation.Nonnull;
 
 import static io.gatling.javaapi.core.CoreDsl.atOnceUsers;
 
-public class Debug extends SimulationRoot{
-      {
-	  setUp(
-              PublishMessage.scn.injectOpen(
-                      atOnceUsers(1)),
-              Pagination.scn.injectOpen(
-                      atOnceUsers(1)
-              ),
-              LikeMessage.scn.injectOpen(
-                      atOnceUsers(1)
-              ),
-              SubscribeScenario.scn.injectOpen(
-                      atOnceUsers(1)
-              )
-      ).protocols(httpProtocol);
-  }
+public class Debug extends SimulationRoot {
+    {
+        setUp(
+                PublishMessage.scn.injectOpen(
+                        atOnceUsers(1)),
+                Pagination.scn.injectOpen(
+                        atOnceUsers(1)
+                ),
+                LikeMessage.scn.injectOpen(
+                        atOnceUsers(1)
+                ),
+                SubscribeScenario.scn.injectOpen(
+                        atOnceUsers(1)
+                )
+        ).protocols(httpProtocol);
+    }
 
 }
