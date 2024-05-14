@@ -4,18 +4,20 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
+import ru.tinkoff.gatling.javaapi.influxdb.SimulationWithAnnotations;
+import ru.tinkoff.gatling.transactions.Predef;
 
 import static io.gatling.javaapi.http.HttpDsl.http;
 
 public class SimulationRoot extends Simulation {
     Config conf = ConfigFactory.load("simulation.properties");
 
-    @Override
-    public void before() {
-
-        System.out.println((double) conf.getInt("PublishMessageIntensivity") / 3600);
-        System.out.println(conf.getString("baseUrl"));
-    }
+//    @Override
+//    public void before() {
+//
+//        System.out.println((double) conf.getInt("PublishMessageIntensivity") / 3600);
+//        System.out.println(conf.getString("baseUrl"));
+//    }
 
     protected HttpProtocolBuilder httpProtocol = http
 //            .proxy(Proxy("localhost", 8888))
