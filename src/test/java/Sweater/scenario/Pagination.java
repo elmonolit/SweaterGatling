@@ -15,13 +15,13 @@ import static ru.tinkoff.gatling.javaapi.Transactions.startTransaction;
 public class Pagination {
 
     public static ScenarioBuilder scn = scenario("Pagination")
-            .group("Pagination")
-            .on(
-                    exec(startTransaction("Pagination"))
+//            .group("Pagination")
+//            .on(
+            .exec(startTransaction("Pagination_TC"))
                             .exec(new Login().login())
                             .exec(new MainPage().open())
                             .exec(new MainPage().openRandomPage())
                             .exec(new Logout().logout())
-                            .exec(endTransaction("Pagination"))
-            );
+                            .exec(endTransaction("Pagination_TC"));
+//            );
 }
